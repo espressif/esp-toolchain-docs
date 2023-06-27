@@ -2,6 +2,10 @@
 
 This repository collects documentation about ESP toolchains features that are not related to ESP-IDF.
 
+## QEMU
+
+- [Espressif QEMU fork documentation](qemu/README.md)
+
 ## GCC toolchain
 
 - [Build ELF file to run it on QEMU or load via OpenOCD](gcc/build-and-run-native-app.md)
