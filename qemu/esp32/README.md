@@ -17,6 +17,7 @@ To generate the `ninja` build files, we need to configure the project first, the
 ```bash
 ./configure --target-list=xtensa-softmmu \
     --enable-gcrypt \
+    --enable-slirp \
     --enable-debug --enable-sanitizers \
     --disable-strip --disable-user \
     --disable-capstone --disable-vnc \
