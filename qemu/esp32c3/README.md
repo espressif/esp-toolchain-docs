@@ -92,9 +92,9 @@ The last line sets a breakpoint in `app_main` function of the guest application 
 
 ## Hardware crypto support
 
-Currently, ESP32-C3 QEMU implementation only supports SHA and AES, **without** DMA.
+The ESP32-C3 QEMU implementation supports SHA, AES, RSA, HMAC, and Digital Signature.
 
-If your project needs any of the unsupported crypto features, consider disabling them in the `menuconfig` beforehand.
+However, it does not support flash encryption yet (`XTS_AES`), so if your project uses this feature, consider disabling it in the `menuconfig` beforehand.
 
 ## Specifying bootstrapping mode
 
@@ -214,3 +214,15 @@ Note: `esptool` can **not** reset the emulated chip using the RTS signal, becaus
 ## Specifying ROM ELF file
 
 If `-kernel` and `-bios` arguments are not given, ESP32-C3 ROM code will be loaded. This ROM code binary is included in the repository. To specify the ROM code ELF file to load, pass the filename with a `-bios <filename>` argument.
+
+## Disabling the watchdogs
+
+By default, Timer Group watchdog timers are emulated, and TG0 WDT is enabled at reset. It is sometimes useful to disable these watchdog timers. This can be done by adding the following to the command line:
+
+```
+-global driver=timer.esp32c3.timg,property=wdt_disable,value=true
+```
+
+This disables the emulation of TG watchdog timers. Even if the application configures them, they will not fire.
+
+The RTC watchdog timer is not emulated yet, so it doesn't need to be disabled.
