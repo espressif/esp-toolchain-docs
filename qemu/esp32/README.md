@@ -19,12 +19,15 @@ To generate the `ninja` build files, we need to configure the project first, the
     --enable-gcrypt \
     --enable-slirp \
     --enable-debug --enable-sanitizers \
+    --enable-sdl \
     --disable-strip --disable-user \
     --disable-capstone --disable-vnc \
-    --disable-sdl --disable-gtk
+    --disable-gtk
 ```
 
 To reduce the first compilation time, feel free to add more `--disable` options. The complete list of options that can be enabled or disabled can be obtained with `./configure --help` command.
+
+If you need a graphical interface for the virtual machine, make sure to provide `--enable-sdl` or `--enable-gtk` or both.
 
 ## Build
 
@@ -294,3 +297,19 @@ QEMU emulates SD/MMC host controller used in ESP32. To add an SD card to the sys
 If you need to create a large SD card image, it is recommended to use sparse `cqow2` images instead of raw ones. Consult QEMU manual about `qemu-img` tool for details.
 
 Only one SD card is supported at a time. You can use either slot 0 or slot 1 of the SD/MMC controller in the application code.
+
+## Enabling graphical user interface (GUI)
+
+The ESP32 QEMU implementation implements a virtual RGB panel, absent on the real hardware, that can be used to show graphical interface. It is associated to a virtual frame buffer that can be used to populate the pixels to show. It is also possible to use the target internal RAM as a frame buffer.
+
+To enable the graphical interface, while keeping the serial output in the console, use the following command line:
+
+```
+build/qemu-system-xtensa \
+    -machine esp32 \
+    -drive file=flash_image.bin,if=mtd,format=raw
+    -display sdl \
+    -serial stdio
+```
+
+If `gtk` backend was enabled when compiling QEMU, it is possible to replace `-display sdl` with `-display gtk`
