@@ -37,7 +37,7 @@ After configuring the project successfully, `ninja` can be used to build it:
 ninja -C build
 ```
 
-Compilation can take a few minutes depending on the components that were enabled or disabled previously. Upon completion, `build/qemu-system-xtensa` should be created.
+Compilation can take a few minutes depending on the components that were enabled or disabled previously. Upon completion, `build/qemu-system-riscv32` should be created.
 
 # Compiling the ESP-IDF program to emulate
 
