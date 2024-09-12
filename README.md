@@ -13,4 +13,5 @@ This repository collects documentation about ESP toolchains features that are no
 ## Clang toolchain
 
 - [Build ESP-IDF application](clang/esp-idf-app-clang-build.md)
+- [Build Clang Toolchain](https://github.com/espressif/esp-llvm-embedded-toolchain/blob/master/docs/building-from-source.md#espressif-toolchain-specifics)
 - [Build demo project for testing GLOW Ahead Of Time (AOT) compiled executable bundles](clang/glow-image-file-server.md)
