@@ -41,7 +41,7 @@ Compilation can take a few minutes depending on the components that were enabled
 
 # Compiling the ESP-IDF program to emulate
 
-QEMU for ESP32 target is ready, it already includes the first stage bootloader, located on the ROM on the real chip, which is mainly responsible for initializing the peripherals, like the UART and, more importantly, the SPI Flash. The latter **must** contain the second stage bootloader and the program to run.
+QEMU for the ESP32 target is ready, it already includes the first stage bootloader, located on the ROM on the real chip, which is mainly responsible for initializing the peripherals, like the UART and, more importantly, the SPI Flash. The latter **must** contain the second stage bootloader and the program to run.
 
 Thus, in this section, we are going to create a flash image that combines the (second stage) bootloader, the partition table and the application to run. This can be done using `esptool.py merge_bin` command, supported in `esptool.py` 3.1 or later. Let's suppose that the ESP-IDf project has just been compiled successfully, the following commands will create that flash image:
 
