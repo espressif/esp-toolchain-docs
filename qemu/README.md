@@ -1,6 +1,7 @@
 ## Choose your target
 
 [<img alt="ESP32" width="20%" src="imgs/esp32.png" />](esp32/README.md)
+[<img alt="ESP32-S3" width="20%" src="imgs/esp32s3.png" />](esp32s3/README.md)
 [<img alt="ESP32-C3" width="20%" src="imgs/esp32c3.png" />](esp32c3/README.md)
 
 ## About Espressif QEMU fork
