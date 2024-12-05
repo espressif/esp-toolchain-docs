@@ -45,7 +45,7 @@ QEMU for the ESP32 target is ready, it already includes the first stage bootload
 
 Thus, in this section, we are going to create a flash image that combines the (second stage) bootloader, the partition table and the application to run. This can be done using `esptool.py merge_bin` command, supported in `esptool.py` 3.1 or later. Let's suppose that the ESP-IDf project has just been compiled successfully, the following commands will create that flash image:
 
-```bash
+```
 cd build
 esptool.py --chip esp32 merge_bin --fill-flash-size 4MB -o flash_image.bin @flash_args
 ```
@@ -167,10 +167,12 @@ Add extra arguments to the command line:
 
 The first argument creates a block device backed by `qemu_efuse.bin` file, with identifier `efuse`. The second line configures `nvram.esp32.efuse` device to use this block device for storage.
 
-The file must be created before starting QEMU:
+The `qemu_efuse.bin` file must be created before starting QEMU.
+You can keep this file any directory you wish, but we recommend to keep it in the same directory as `flash_image.bin` we created above to follow along with this tutorial. 
 
 ```
-dd if=/dev/zero bs=1 count=124 of=/tmp/qemu_efuse.bin
+cd build 
+dd if=/dev/zero bs=1 count=124 of=qemu_efuse.bin
 ```
 
 124 bytes is the total size of ESP32 eFuse blocks.
@@ -201,8 +203,8 @@ To convert this (`efuse.hex`) back to binary, run `xxd -r -p efuse.hex qemu_efus
 Alternatively, these bits can be set using espefuse:
 
 ```
-espefuse.py --port=socket://localhost:5555 burn_efuse CHIP_VER_REV1
-espefuse.py --port=socket://localhost:5555 burn_efuse CHIP_VER_REV2
+espefuse.py --before no_reset --port=socket://localhost:5555 burn_efuse CHIP_VER_REV1
+espefuse.py --before no_reset --port=socket://localhost:5555 burn_efuse CHIP_VER_REV2
 ```
 
 ## Disabling the watchdogs
@@ -230,13 +232,14 @@ The RTC watchdog timer is not emulated yet, so it doesn't need to be disabled.
     ```
 
     The final line redirects the emulated UART to TCP port 5555 (QEMU acts as a server).
-
-    Type q and press Enter at any time to quit.
+    >Please keep QEMU running until you have finished using it. Use a separate terminal to run the `esptool.py` and `espefuse.py` tools with the following commands. 
+    
+    Once you finish, type `q` and press Enter at any time to quit.
 
 1. Run esptool.py:
 
     ```
-    esptool.py -p socket://localhost:5555 flash_id
+    esptool.py --before no_reset -p socket://localhost:5555 flash_id
     ```
 
     Flashing with `idf.py` also works:
@@ -249,7 +252,7 @@ The RTC watchdog timer is not emulated yet, so it doesn't need to be disabled.
 1. Or, run espefuse.py:
 
     ```
-    espefuse.py --port socket://localhost:5555 --do-not-confirm burn_custom_mac 00:11:22:33:44:55
+    espefuse.py --before no_reset --port socket://localhost:5555 --do-not-confirm burn_custom_mac 00:11:22:33:44:55
     ```
 
 Note: `esptool` can **not** reset the emulated chip using the RTS signal, because the state of RTS is not transmitted over TCP to QEMU. To reset the emulated chip, run `system_reset` command in QEMU console (started at step 1).
