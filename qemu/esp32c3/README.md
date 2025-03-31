@@ -18,7 +18,7 @@ To generate the `ninja` build files, we need to configure the project first, the
 ./configure --target-list=riscv32-softmmu \
     --enable-gcrypt \
     --enable-slirp \
-    --enable-debug --enable-sanitizers \
+    --enable-debug \
     --enable-sdl \
     --disable-strip --disable-user \
     --disable-capstone --disable-vnc \
