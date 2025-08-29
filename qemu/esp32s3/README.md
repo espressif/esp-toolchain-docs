@@ -246,6 +246,18 @@ QEMU "memory size" option can be used to enable PSRAM emulation. By default, no 
 
 This PSRAM emulation also supports MMU.
 
+By default, the emulated PSRAM is assumed to be connected via Quad SPI. Since no 16MB or 32MB Quad SPI devices exist, these sizes are assigned a fake device ID that is compatible with ESP-IDF.
+
+### Enabling octal PSRAM
+
+To simulate an octal PSRAM, you can use the following command line option:
+
+```
+-global driver=ssi_psram,property=is_octal,value=true
+```
+
+Note that this configuration simulates the APS6408L_OBMx device, which has a theoretical capacity of 64MB. However, this capacity does not affect the actual available RAM size, which is determined by the -m option described earlier.
+
 ## Enabling graphical user interface (GUI)
 
 The ESP32-S3 QEMU implementation implements a virtual RGB panel, absent on the real hardware, that can be used to show graphical interface. It is associated to a virtual frame buffer that can be used to populate the pixels to show. It is also possible to use the target internal RAM as a frame buffer.
