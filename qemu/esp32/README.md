@@ -15,7 +15,7 @@ In addition to QEMU's prerequisites, make sure that `libgcrypt` is installed on 
 To generate the `ninja` build files, we need to configure the project first, the following command can be used for that:
 
 ```bash
-./configure --target-list=xtensa-softmmu \
+./configure --target-list='xtensa-softmmu riscv32-softmmu' \
     --enable-gcrypt \
     --enable-slirp \
     --enable-debug \
