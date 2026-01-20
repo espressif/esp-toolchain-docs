@@ -280,6 +280,8 @@ QEMU "memory size" option can be used to enable PSRAM emulation. By default, no 
 
 Note that PSRAM MMU is not emulated yet, so things like bank switching (`himem` in IDF) do not work.
 
+Also note that PSRAM emulation currently does not support a SPIRAM speed of 80 MHz. It causes the startup to fail with the message `PSRAM ID read error: 0x00000000, PSRAM chip not found or not supported`. Therefore, make sure that the SPIRAM speed is configured to 40MHz, i.e. your `sdkconfig` contains `CONFIG_SPIRAM_SPEED_40M=y`.
+
 ## Using SD cards
 
 QEMU emulates SD/MMC host controller used in ESP32. To add an SD card to the system, create an image and pass it to QEMU.
